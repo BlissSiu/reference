@@ -1,9 +1,11 @@
 #include <stdio.h>
 
+void sawp(int* px, int* py); //매개변수 포인터형으로 선언
+
 int main()
 {
 
-	//데이터형의 관계없이 포인터의 크기는 같을까?
+	///데이터형의 관계없이 포인터의 크기는 같을까?
 
 	/*
 	int a; //int 형 4바이트
@@ -32,7 +34,7 @@ int main()
 
 
 
-	//포인터는 다른 변수를 가리킨다.
+	///포인터는 다른 변수를 가리킨다.
 	/*
 	int* p ; // 포인터 선언 및 초기화
 	int d = 123; // 일반 변수 선언 및 초기화
@@ -45,7 +47,7 @@ int main()
 	*/
 
 	
-	//포인터의 선언
+	///포인터의 선언
 	/*
 	int a = 10;
 	int* p1; //초기화를 안한 포인터
@@ -57,7 +59,7 @@ int main()
 	*/
 
 
-	//const 포인터
+	///const 포인터
 	/*
 	int a = 10, b = 20;
 
@@ -81,38 +83,78 @@ int main()
 	*/
 
 
-	//배열과 포인터
+	///배열과 포인터
 	/*
 	int* p1 = (int*)0x100; //절대 주소로 초기화 -> 0x100번지에 어떤것이 들어있을지 모르는데 초기화 하면 위험하다.
 	int arr[5] = { 1,2,3,4,5 };
-	int i = 0;
 	printf("arr의 주소 arr[0] : %p, arr[1] : %p, arr[2] : %p, arr[3] : %p, arr[4] : %p\n", &arr[0], &arr[1], &arr[2], &arr[3], &arr[4]);
 	printf("p1 : %p, p1+1 : %p , p1+2 : %p\n", p1, p1 + 1, p1 + 2); //int형 이므로 4바이트씩 늘어나는 주소 출력
 
 	p1 = &arr[0];
 	printf("p1 : %d, p1+1 : %d , p1+2 : %d, p1+3 : %d, p1+4 : %d\n", *p1, *p1 + 1, *p1 + 2, *p1 + 3, *p1 + 4);
+	
+	int* p = &arr[0];
+	int i;
+
+	for (i = 0; i < 5; i++, p++)
+	{
+		printf("p=%p, ", p);
+		printf("*p = %d\n", *p);
+	}
+
+	int* p2 = arr; // &arr[0]과 같은 의미 . 배열의 이름은 배열의 시작주소
+
+	printf("%p ", &p2);
+
+	for (i = 0; i < 5; i++)
+	{
+		printf("p[%d] = %d\n", i, p2[i]);
+	}
 	*/
 
 
+	///배열과 포인터의 차이 
+	/*
+	int x[5] = { 1,2,3,4,5 };
+	int y[5] = { 0, };
+	int* p = x;
 
+	//x = y; //변경 불가능
+	//x++; //증감연산 불가능 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	p = y; //변경 가능
+	p++; //증감연산 가능
 	
 
+	printf("x : %d\n", sizeof(x));z
+	printf("x : %d\n", sizeof(p));
+	*/
 
 
+	///다중포인터
+   /*
+	int a = 10;
+	int* p = &a;
+	int** pp = &p;
 
+	printf("a : %p , p : %p, pp : %p", &a, &p, &pp);
+	printf("a : %d , p : %d, pp : %d", a, *p, **pp);
+	*/
+	
+	///함수와 포인터
+
+	int a = 1;
+	int b = 2;
+
+	printf("a = %d, b =%d\n", a, b);
+	sawp(&a, &b); //인자로 전달하려는 변수의 주소로 전달한다.
+	printf("a = %d, b = %d\n", a, b);
+	
+}
+
+void sawp(int* px, int* py) 
+{
+	int temp = *px; //temp를 px가 가리키는 값으로 초기화
+	*px = *py; //py가 가리키는 변수의 값을 px라는 변수에 대입한다.
+	*py = temp; // py가 가리키는 변수에 temp를 대입한다.
 }
